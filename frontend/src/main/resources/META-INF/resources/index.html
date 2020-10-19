@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Hybrid Cloud</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,400italic,600,600italic|Ubuntu+Mono:400"
+        rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/app.css" type="text/css" />
+    <link rel="icon" href="" type="image/png" />
+    <script type="text/javascript" src="/gesso.js"></script>
+    <script type="text/javascript" src="/app.js"></script>
+    <script>
+        "use strict";
+        const app = new Application();
+        function myTestFunc() {  // all this is hacking to figure out gesso
+
+            console.log("Clicked Test");
+            // let div = gesso.createDiv(null, "#responses");
+            // let item = gesso.createDiv(div, "response");
+            // gesso.createDiv(item, "worker", "10x");
+            // gesso.createDiv(item, "cloud", "burr");
+            // gesso.createDiv(item, "text", "and more");
+            // gesso.replaceElement($("#responses"), div);
+
+            // let headings = ["Worker", "Cloud", "Response"];
+            // let rows = [];
+            // rows.push(["whateverX", "AZR", "RRUB"]);
+            // let table = gesso.createTable(null, headings, rows, {id: "responses"});
+            // gesso.replaceElement($("#responses"), table);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="-body">
+        <div id="-body-content">
+            <h1>Hybrid Cloud</h1>
+            <!-- my little debugging hack, a button to try things 
+        <button id="test" onclick="myTestFunc()">Test</button>
+        -->
+            <h2>Request</h2>
+
+            <form id="requests" method="post" action="javascript:void(0);">
+                <input id="request-text" type="text" name="text" autofocus="autofocus" />
+
+                <div id="request-uppercase-option">
+                    <input id="request-uppercase" type="checkbox" name="uppercase" checked="checked" />
+                    <label for="request-uppercase">Uppercase</label>
+                </div>
+
+                <div id="request-reverse-option">
+                    <input id="request-reverse" type="checkbox" name="reverse" />
+                    <label for="request-reverse">Reverse</label>
+                </div>
+
+                <button>Send Request</button>
+
+            </form>
+
+            <h2>Responses</h2>
+
+            <div id="responses"></div>
+
+            <h2>Workers</h2>
+
+            <div id="workers"><span class="placeholder">Loading</span></div>
+        </div>
+    </div>
+</body>
+
+</html>

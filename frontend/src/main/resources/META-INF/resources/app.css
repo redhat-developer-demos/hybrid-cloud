@@ -1,0 +1,413 @@
+/*
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ *
+ */
+
+ * {
+    margin: 1em 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-style: none;
+}
+
+*:first-child {
+    margin-top: 0;
+}
+
+*:last-child {
+    margin-bottom: 0;
+}
+
+html,
+body,
+div,
+a,
+br {
+    margin: 0;
+}
+
+body {
+    font: 13pt/19pt "Source Sans Pro", sans-serif;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.8);
+    text-rendering: optimizeLegibility;
+}
+
+code,
+pre {
+    font-family: "Ubuntu Mono", monospace;
+}
+
+h1 {
+    font-size: 1em;
+    font-weight: 400;
+    margin-bottom: 2em;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 1.4em;
+    margin-top: 1.4em;
+    margin-bottom: 0.9em;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+    color: inherit;
+}
+
+h1.selected,
+h2.selected,
+h3.selected,
+h4.selected,
+h5.selected,
+h6.selected {
+    color: rgba(127, 0, 0, 0.8);
+}
+
+a {
+    text-decoration: none;
+    color: rgba(15, 63, 127, 0.8);
+}
+
+a.heading-link {
+    opacity: 0;
+    font-weight: 300;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}
+
+a.heading-link:hover {
+    opacity: 1;
+}
+
+ol,
+ul,
+dd {
+    padding-left: 1.2em;
+}
+
+ul {
+    list-style-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAdAAAAHQBMYXlgQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAABMSURBVCjPY/j//z8DFtwAxRhyuBTDQAMhDWDF9+/f/wfC2DRhVRwcHPwfhLFpwqrYxcUFjLFpwqkYlyayNJDsJLI8TVawkhVxBJMGABnYvZjQ/qzjAAAAAElFTkSuQmCC");
+}
+
+li,
+dt,
+dd {
+    margin: 0;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+li > ul,
+li > ol,
+dd > dl {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+li > p:last-child,
+dd > p:last-child {
+    margin-bottom: 1em;
+}
+
+form input,
+form textarea,
+form button {
+    font-family: inherit;
+    font-size: inherit;
+    border: 1px solid #ccc;
+    margin-bottom: 0;
+}
+
+form textarea {
+    width: 16em;
+}
+
+form button {
+    background-color: rgb(247, 247, 247);
+    padding: 0 0.4em;
+    font-weight: 300;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td,
+th {
+    border-bottom: 1px solid #ddd;
+    padding: 0.3em 0.5em 0.3em 0;
+    vertical-align: top;
+    text-align: left;
+}
+
+td em,
+th {
+    font-weight: 300;
+    font-style: normal;
+}
+
+hr {
+    border-bottom: 1px solid #ddd;
+}
+
+code,
+pre {
+    background-color: rgb(247, 247, 247);
+}
+
+pre {
+    overflow: auto;
+    padding: 1em;
+}
+
+blockquote {
+    margin-left: 2em;
+}
+
+section {
+    margin: 1.5em 0;
+}
+
+span.placeholder {
+    font-style: italic;
+}
+
+.two-column {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+}
+
+.three-column {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+}
+
+.four-column {
+    -webkit-column-count: 4;
+    -moz-column-count: 4;
+    column-count: 4;
+}
+
+.ruled {
+    border-top: 1px solid #ddd;
+    padding-top: 2em;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex > section,
+.flex > div {
+    flex: 1 0 0;
+}
+
+#-head, #-body, #-foot {
+    margin-bottom: 0;
+}
+
+#-head {
+    padding: 1em 2em;
+    border-bottom: 1px solid #ddd;
+}
+
+#-body {
+    padding: 2em;
+}
+
+#-foot {
+    border-top: 1px solid #ddd;
+    padding: 1em 2em;
+}
+
+#-head-content, #-body-content, #-foot-content {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+#-head-content {
+    font-size: 0.9em;
+}
+
+#-foot-content {
+    font-size: 0.8em;
+}
+
+#-path-navigation {
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+#-path-navigation > li {
+    display: inline;
+}
+
+#-path-navigation > li:after {
+    content: " \00a0\003e\00a0\00a0 ";
+}
+
+#-path-navigation > li:last-child:after {
+    content: none;
+}
+
+#-global-navigation {
+    float: right;
+}
+
+#requests {
+    font-size: 1.2em;
+    display: grid;
+    grid: "t t t t"
+          "u r x b";
+    grid-gap: 1em;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+#requests > * {
+    margin: 0;
+}
+
+#requests > input[name="text"] {
+    grid-area: t;
+    width: 100%;
+    padding: 0.2em 0.4em;
+}
+
+#requests input[type="checkbox"] {
+    margin-right: 0.4em;
+}
+
+#requests > button {
+    grid-area: b;
+    font-size: 0.9em;
+    padding: 0.3em;
+}
+
+#request-uppercase-option {
+    grid-area: u;
+    font-size: 0.9em;
+    font-weight: 300;
+    padding-top: 0.3em;
+}
+
+#request-reverse-option {
+    grid-area: r;
+    font-size: 0.9em;
+    font-weight: 300;
+    padding-top: 0.3em;
+}
+
+#responses {
+    width: 100%;
+    height: 10em;
+    overflow: auto;
+    padding: 0.2em 0.4em;
+    border: 1px solid #ccc;
+}
+
+#responses > .response > .worker {
+    display: inline-block;
+    font-weight: 300;
+    width: 27%;
+}
+
+#responses > .response > .cloud {
+    display: inline-block;
+    font-weight: 300;
+    width: 15%;
+}
+
+#responses > .response > .text {
+    display: inline;
+}
+
+#workers {
+    width: 100%;
+}
+
+#workers th:nth-child(3),
+#workers th:nth-child(3),
+#workers th:nth-child(4),
+#workers td:nth-child(3),
+#workers td:nth-child(4) {
+    text-align: right;
+}
+
+@media screen and (max-width: 720px) {
+    .two-column,
+    .three-column,
+    .four-column {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+    }
+
+    .flex {
+        display: block;
+    }
+
+    .flex > section {
+        margin: 1.5em 0;
+    }
+
+    .flex > section:first-child {
+        margin-top: 0;
+    }
+
+    .flex > section:last-child {
+        margin-bottom: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .two-column, .three-column, .four-column {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+    }
+}
+
+@media print {
+    body {
+        font-size: 10pt;
+    }
+
+    pre {
+        font-size: 0.9em;
+        overflow: hidden;
+    }
+
+    #-head, #-foot {
+        display: none;
+    }
+
+    #-body {
+        padding: 0;
+    }
+}
