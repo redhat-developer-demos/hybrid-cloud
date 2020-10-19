@@ -1,0 +1,22 @@
+name: backend
+
+on:
+  push:
+    branches: 
+    - master
+    paths:
+    - backend/**
+    - .github/workflows/backend-action.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Setup Java JDK
+      uses: actions/setup-java@v1.3.0
+      with:
+        java-version: 11
+    - name: Checkout project
+      uses: actions/checkout@v2
+    - name: Maven Build
+      run: cd backend && ./mvnw package
