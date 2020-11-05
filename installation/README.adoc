@@ -13,37 +13,43 @@ NOTE: Quota is always *per region*, ask to increase the quota for your region.
 
 === AWS (US)
 
-With this topology (3+2) default quota you  should be fine with this `install-config.yaml`.
+With this topology (3+2) default quota you should be fine with this `install-config.yaml`.
 
-The default region for this demo (that you can change from `install-config.yaml`) is: *us-east-1*
+The default region for this demo (that you can change from `install-config.yaml`) is:
+
+- *us-east-1*
 
 If you want a default cluster of 3+3, check out link:https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-account.html#installation-aws-limits_installing-aws-account[Service limits] to review all limits.
 
-Quota:
+Min. Quota:
 
-* EC2 Instances / Instance Limit (All Standard (A, C, D, H, I, M, R, T, Z) instances), New Limit = 20
+* *EC2 Instances / Instance Limit (All Standard (A, C, D, H, I, M, R, T, Z) instances)*:  20
 
 === GCP (Europe)
 
-The default region for this demo (that you can change from `install-config.yaml`) is: *europe-west3*
+The default region for this demo (that you can change from `install-config.yaml`) is:
+
+- *europe-west3*
 
 You need to ensure all link:https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-account.html#installation-gcp-project_installing-gcp-account[requirements] are met for Google Cloud.
 
-Quota:
+Min. Quota:
 
-* N2_CPUS: 24
-* SSD_TOTAL_GB: 1000
+* *N2_CPUS*: 24
+* *SSD_TOTAL_GB*: 1000
 
 === Azure (Asia)
 
-The default region for this demo (that you can change from `install-config.yaml`) is: *southeastasia*
+The default region for this demo (that you can change from `install-config.yaml`) is:
+
+- *southeastasia*
 
 You need to ensure all link:https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-account.html[requirements] are met for Azure.
 
 
-Quota:
+Min. Quota:
 
-* DSv3 Series: 40
+* *DSv3 Series*: 40
 
 
 == Download installer
