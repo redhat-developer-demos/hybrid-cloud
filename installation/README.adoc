@@ -58,6 +58,14 @@ Go to https://cloud.redhat.com/openshift/install to get the Installer and the Pu
 
 Add the pull secret and your ssh public key to your `install-config.yaml` inside `aws,gcp,azure` dir, follow link:https://docs.openshift.com/container-platform/latest/welcome/index.html[Documentation] for all details for the installation on the specific cloud provider.
 
+=== Change basedomain
+
+Use your own domain for the clusters, change it from `baseDomain:` inside `install-config.yaml`.
+
+In this example, I have one domain `cloudnativedemos.com` managed by link:https://aws.amazon.com/route53/[Route53] as Hosted Zone, and one additional Hosted zone for the subdomain on AWS `aws.cloudnativedemos.com`. You can then create the DNS in Google Cloud DNS and Azure DNS and use `NS` servers as shown:
+
+image::route53_table.png[Route 53 Table]
+
 === AWS
 
 [source,bash, role="copypaste"]
