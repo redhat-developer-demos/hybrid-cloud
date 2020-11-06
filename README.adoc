@@ -7,6 +7,10 @@ image:https://github.com/redhat-developer-demos/hybrid-cloud/workflows/frontend/
 
 == TL;DR
 
+*Hybrid Cloud demo*: Quarkus backends distributed in different OpenShift clusters installed on public clouds, controlled by link:https://skupper.io/[Skupper] and consumed by a Frontend.
+
+You find the guide on how to install such clusters inside link:installation/README.adoc[installation] dir.
+
 === Install Skupper
 
 [source, shell-session]
@@ -26,7 +30,7 @@ Deploy the backend to *all* your clusters:
 
 [source, shell-session]
 ----
-kubectl apply -f backend-{azr|aws|gcp|minikube}.yml
+kubectl apply -f backend-{azr|aws|gcp|roks|minikube}.yml
 ----
 
 Then you need to annotate the backend service so it is skupper-aware.

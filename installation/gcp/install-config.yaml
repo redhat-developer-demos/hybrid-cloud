@@ -1,0 +1,41 @@
+apiVersion: v1
+baseDomain: gcp.cloudnativedemos.com
+controlPlane: 
+  hyperthreading: Enabled   
+  name: master
+  platform:
+    gcp:
+      type: n2-standard-4
+      zones:
+      - europe-west3-a
+      - europe-west3-b
+  replicas: 3
+compute: 
+- hyperthreading: Enabled 
+  name: worker
+  platform:
+    gcp:
+      type: n2-standard-4
+      zones:
+      - europe-west3-a
+      - europe-west3-b
+  replicas: 2
+metadata:
+  name: openshift
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 10.0.0.0/16
+  networkType: OpenShiftSDN
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  gcp:
+    ProjectID: ocp-cluster-294018
+    region: europe-west3
+pullSecret: '{}'
+fips: false 
+sshKey: ''
+
