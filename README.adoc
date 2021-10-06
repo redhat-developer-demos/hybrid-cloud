@@ -15,11 +15,25 @@ You find the guide on how to install such clusters inside link:installation/READ
 
 [source, shell-session]
 ----
+# Windows
+curl -fL https://github.com/skupperproject/skupper/releases/download/0.7.0/skupper-cli-0.7.0-windows-amd64.zip
+unzip skupper-cli-0.7.0-windows-amd64.zip
+
+mkdir %UserProfile%\bin
+move skupper.exe %UserProfile%\bin
+set PATH=%PATH%;%UserProfile%\bin
+
 # Linux
-curl -fL https://github.com/skupperproject/skupper-cli/releases/download/0.2.0/skupper-cli-0.2.0-linux-amd64.tgz | tar -xzf -
+curl -fL https://github.com/skupperproject/skupper/releases/download/0.7.0/skupper-cli-0.7.0-linux-amd64.tgz | tar -xzf -
+mkdir $HOME/bin
+mv skupper $HOME/bin
+export PATH=$PATH:$HOME/bin
 
 # MacOs
-curl -fL https://github.com/skupperproject/skupper-cli/releases/download/0.2.0/skupper-cli-0.2.0-mac-amd64.tgz | tar -xzf -
+curl -fL https://github.com/skupperproject/skupper/releases/download/0.7.0/skupper-cli-0.7.0-mac-amd64.tgz | tar -xzf -
+mkdir $HOME/bin
+mv skupper $HOME/bin
+export PATH=$PATH:$HOME/bin
 ----
 
 === Deploy Services
@@ -93,7 +107,7 @@ skupper-router-7976948d9f-hn6ms             1/1     Running   0          104s
 Finally create a token:
 
 ----
-skupper connection-token token.yaml
+skupper token create token.yaml -t cert
 
 Connection token written to token.yaml
 ----
@@ -103,7 +117,7 @@ In *all the other clusters*, use the connection token created in the previous st
 [source, shell-session]
 ----
 skupper init
-skupper connect token.yaml
+skupper link create token.yaml
 ----
 
 Everything is connected and ready to be used.
