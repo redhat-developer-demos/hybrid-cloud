@@ -3,7 +3,7 @@
 image:https://github.com/redhat-developer-demos/hybrid-cloud/workflows/backend/badge.svg[]
 image:https://github.com/redhat-developer-demos/hybrid-cloud/workflows/frontend/badge.svg[]
 
-*Tested with skupper 0.2.0*
+*Tested with skupper 0.7.0*
 
 == TL;DR
 
