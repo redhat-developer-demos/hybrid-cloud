@@ -74,7 +74,7 @@ spec:
           protocol: "TCP"
       serviceAccount: "hybrid-cloud-frontend"
 ---
-apiVersion: "extensions/v1beta1"
+apiVersion: "networking.k8s.io/v1"
 kind: "Ingress"
 metadata:
   labels:
@@ -83,10 +83,12 @@ metadata:
   name: "hybrid-cloud-frontend"
 spec:
   rules:
-  - host: ""
-    http:
-      paths:
-      - backend:
-          serviceName: "hybrid-cloud-frontend"
-          servicePort: 8080
-        path: "/"
+    - http:
+        paths:
+          - backend:
+              service:
+                name: "hybrid-cloud-frontend"
+                port:
+                  number: 8080
+            path: "/"
+            pathType: Prefix
