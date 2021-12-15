@@ -40,8 +40,8 @@ export PATH=$PATH:$HOME/bin
 
 IMPORTANT: If you are using `minikube` as one cluster, run `minikube tunnel` in a new terminal.
 
-As Kubernetes enables you to have cloud portability, the workload can be deployed on any cloud.
-Deploy using the following two commands in any Kubernetes context and change only `WORKER_CLOUD_ID` value to differentiate between them:
+As Kubernetes enables you to have cloud portability, the workload can be deployed on any Kubernetes context.
+Deploy using the following two commands in any cluster and change only `WORKER_CLOUD_ID` value to differentiate between them:
 
 [source, shell-session]
 ----
