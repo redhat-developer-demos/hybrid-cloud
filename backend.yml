@@ -59,14 +59,13 @@ spec:
         app.kubernetes.io/name: "hybrid-cloud-backend"
         app.kubernetes.io/version: "1.0.0"
     spec:
+      serviceAccountName: "hybrid-cloud-backend"
       containers:
       - env:
         - name: "KUBERNETES_NAMESPACE"
           valueFrom:
             fieldRef:
               fieldPath: "metadata.namespace"
-        - name: "WORKER_CLOUD_ID"
-          value: "minikube"
         image: "quay.io/rhdevelopers/hybrid-cloud-backend:1.0.0"
         imagePullPolicy: "IfNotPresent"
         name: "hybrid-cloud-backend"
@@ -74,4 +73,3 @@ spec:
         - containerPort: 8080
           name: "http"
           protocol: "TCP"
-      serviceAccount: "hybrid-cloud-backend"

@@ -38,13 +38,15 @@ export PATH=$PATH:$HOME/bin
 
 === Deploy Services
 
-IMPORTANT: If you are using `minikube` as one cluster, run `minikube tunnel` in a new terminal:
+IMPORTANT: If you are using `minikube` as one cluster, run `minikube tunnel` in a new terminal.
 
-Deploy the backend to *all* your clusters:
+As Kubernetes enables you to have cloud portability, the workload can be deployed on any Kubernetes context.
+Deploy using the following two commands in any cluster and change only `WORKER_CLOUD_ID` value to differentiate between them:
 
 [source, shell-session]
 ----
-kubectl apply -f backend-{azr|aws|gcp|roks|minikube}.yml
+kubectl apply -f backend.yml
+kubectl set env deployment/hybrid-cloud-backend WORKER_CLOUD_ID="minikube"
 ----
 
 Then you need to annotate the backend service so it is skupper-aware.
