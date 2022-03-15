@@ -46,7 +46,7 @@ Deploy using the following two commands in any cluster and change only `WORKER_C
 [source, shell-session]
 ----
 kubectl apply -f backend.yml
-kubectl set env deployment/hybrid-cloud-backend WORKER_CLOUD_ID="minikube"
+kubectl set env deployment/hybrid-cloud-backend WORKER_CLOUD_ID="[minikube|azr|gcp|aws]" #change it accordingly
 ----
 
 Then you need to annotate the backend service so it is skupper-aware.
