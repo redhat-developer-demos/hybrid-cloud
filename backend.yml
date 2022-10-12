@@ -18,6 +18,7 @@ metadata:
     app.quarkus.io/vcs-url: "https://github.com/redhat-developer-demos/hybrid-cloud.git"
     app.quarkus.io/build-timestamp: "2020-03-30 - 19:36:33 +0000"
     app.quarkus.io/commit-id: "2d21e21ba2145aebbdd7ffd805575a53635f791a"
+    skupper.io/proxy: "http"
   labels:
     app.kubernetes.io/name: "hybrid-cloud-backend"
     app.kubernetes.io/version: "1.0.0"

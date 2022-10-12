@@ -3,7 +3,7 @@
 image:https://github.com/redhat-developer-demos/hybrid-cloud/workflows/backend/badge.svg[]
 image:https://github.com/redhat-developer-demos/hybrid-cloud/workflows/frontend/badge.svg[]
 
-*Tested with skupper 0.7.0*
+*Tested with skupper 1.0.2*
 
 == TL;DR
 
@@ -11,26 +11,30 @@ image:https://github.com/redhat-developer-demos/hybrid-cloud/workflows/frontend/
 
 You find the guide on how to install such clusters inside link:installation/README.adoc[installation] dir.
 
+https://youtu.be/Y0g4tQ8Prs0
+
+
 === Install Skupper
 
 [source, shell-session]
 ----
 # Windows
-curl -fL https://github.com/skupperproject/skupper/releases/download/0.7.0/skupper-cli-0.7.0-windows-amd64.zip
-unzip skupper-cli-0.7.0-windows-amd64.zip
+curl -fL https://github.com/skupperproject/skupper/releases/download/1.0.2/skupper-cli-1.0.2-windows-amd64.zip
+
+unzip skupper-cli-1.0.2-windows-amd64.zip
 
 mkdir %UserProfile%\bin
 move skupper.exe %UserProfile%\bin
 set PATH=%PATH%;%UserProfile%\bin
 
 # Linux
-curl -fL https://github.com/skupperproject/skupper/releases/download/0.7.0/skupper-cli-0.7.0-linux-amd64.tgz | tar -xzf -
+curl -fL https://github.com/skupperproject/skupper/releases/download/1.0.2/skupper-cli-1.0.2-linux-amd64.tgz | tar -xzf -
 mkdir $HOME/bin
 mv skupper $HOME/bin
 export PATH=$PATH:$HOME/bin
 
 # MacOs
-curl -fL https://github.com/skupperproject/skupper/releases/download/0.7.0/skupper-cli-0.7.0-mac-amd64.tgz | tar -xzf -
+curl -fL https://github.com/skupperproject/skupper/releases/download/1.0.2/skupper-cli-1.0.2-mac-amd64.tgz | tar -xzf -
 mkdir $HOME/bin
 mv skupper $HOME/bin
 export PATH=$PATH:$HOME/bin
@@ -41,15 +45,16 @@ export PATH=$PATH:$HOME/bin
 IMPORTANT: If you are using `minikube` as one cluster, run `minikube tunnel` in a new terminal.
 
 As Kubernetes enables you to have cloud portability, the workload can be deployed on any Kubernetes context.
-Deploy using the following two commands in any cluster and change only `WORKER_CLOUD_ID` value to differentiate between them:
+Deploy using the following three commands on all clusters and change only `WORKER_CLOUD_ID` value to differentiate between them.  I like to use the cloud region's geography.
 
 [source, shell-session]
 ----
-kubectl apply -f backend.yml
-kubectl set env deployment/hybrid-cloud-backend WORKER_CLOUD_ID="minikube"
+kubectl create namespace hybrid
+kubectl -n hybrid apply -f backend.yml
+kubectl -n hybrid set env deployment/hybrid-cloud-backend WORKER_CLOUD_ID="localhost"
 ----
 
-Then you need to annotate the backend service so it is skupper-aware.
+The annotation has already been applied in the backend.yml file but if wish to apply it manually, use the following command.
 
 [source, shell-session]
 ----
@@ -68,14 +73,34 @@ spec:
   - host: ""
 ----
 
-TIP: In case of OpenShift you can run: `oc expose service hybrid-cloud-frontend` after deploying frontend resource, and it is not required to modify the Ingress configuration. But of course, the first approach works as well in OpenShift.
-
-Deploy the frontend by calling:
+In your *main* cluster, deploy the frontend by calling:
 
 [source, shell-session]
 ----
 kubectl apply -f frontend.yml
 ----
+
+TIP: In case of OpenShift you can run: `oc expose service hybrid-cloud-frontend` after deploying frontend resource, and it is not required to modify the Ingress configuration. But of course, the first approach works as well in OpenShift.
+
+To find the frontend URL, on OpenShift use the Route
+
+[source, shell-session]
+----
+kubectl get routes | grep frontend
+----
+
+On vanilla Kubernetes, try the external IP of the Service
+
+[source, shell-session]
+----
+#AWS
+kubectl get service hybrid-cloud-frontend -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"
+
+#Azure, GCP
+kubectl get service hybrid-cloud-frontend -o jsonpath="{.status.loadBalancer.ingress[0].ip}"
+----
+
+
 
 In your *main* cluster, init `skupper` and create the `connection-token`:
 
@@ -83,11 +108,11 @@ In your *main* cluster, init `skupper` and create the `connection-token`:
 ----
 skupper init --console-auth unsecured # <1>
 
-Skupper is now installed in namespace 'default'.  Use 'skupper status' to get more information.
+Skupper is now installed in namespace 'hybrid'.  Use 'skupper status' to get more information.
 
 skupper status
 
-Skupper is installed in namespace '"default"'. Status pending...
+Skupper is installed in namespace '"hybrid"'. Status pending...
 ----
 <1> This makes anyone be able to access the Skupper UI to visualize the clouds. Fine for demos, not to be used in production.
 
@@ -99,11 +124,10 @@ It takes a bit of time (usually around 2 minutes) until the pods are running:
 kubectl get pods 
 
 NAME                                        READY   STATUS    RESTARTS   AGE
-hybrid-cloud-backend-5948955b7-m5dzk        1/1     Running   0          16m
-hybrid-cloud-backend-proxy-89f44c75-vx9kn   1/1     Running   0          51s
-hybrid-cloud-frontend-7c85f9dfff-fmbd6      1/1     Running   0          10m
-skupper-proxy-controller-77f6c568cc-f8xxd   1/1     Running   0          102s
-skupper-router-7976948d9f-hn6ms             1/1     Running   0          104s
+hybrid-cloud-backend-5cbd67d789-mfvbz       1/1     Running   0          3m55s
+hybrid-cloud-frontend-55bdf64c95-gk2tf      1/1     Running   0          3m27s
+skupper-router-dd7dfff55-tklgg              2/2     Running   0          59s
+skupper-service-controller-dc779b7c-5prhc   1/1     Running   0          56s
 ----
 
 Finally create a token:
@@ -122,8 +146,28 @@ skupper init
 skupper link create token.yaml
 ----
 
-Everything is connected and ready to be used.
+Check the service status on all clusters
+
+[source, shell-session]
+----
+skupper service status
+Services exposed through Skupper:
+╰─ hybrid-cloud-backend (http port 8080)
+   ╰─ Targets:
+      ╰─ app.kubernetes.io/name=hybrid-cloud-backend,app.kubernetes.io/version=1.0.0 name=hybrid-cloud-backend
+----
+
+Check the link status on the 2nd/3rd cluster
+
+[source, shell-session]
+----
+skupper link status
+Link link1 is active
+----
+
 This has been the short-version to get started, continue reading if you want to learn how to build the Docker images, deply them , etc.
+
+
 
 === Skupper UI
 
@@ -133,18 +177,13 @@ If you run:
 ----
 kubectl get services 
 
-NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP                                                                  PORT(S)               AGE
-hybrid-cloud-backend    ClusterIP      172.30.32.251    <none>                                                                       8080/TCP              40m
-hybrid-cloud-frontend   LoadBalancer   172.30.25.65     add076df5798711eaad1a0241cddbab7-1371911574.eu-central-1.elb.amazonaws.com   8080:32647/TCP        39m
-kubernetes              ClusterIP      172.30.0.1       <none>                                                                       443/TCP               71m
-openshift               ExternalName   <none>           kubernetes.default.svc.cluster.local                                         <none>                70m
-skupper-controller      ClusterIP      172.30.247.104   <none>                                                                       8080/TCP              34m
-skupper-internal        ClusterIP      172.30.109.84    <none>                                                                       55671/TCP,45671/TCP   34m
-skupper-messaging       ClusterIP      172.30.64.245    <none>                                                                       5671/TCP              34m
+NAME                    TYPE           CLUSTER-IP      EXTERNAL-IP                                                              PORT(S)               AGE
+hybrid-cloud-backend    ClusterIP      172.30.157.62   <none>                                                                   8080/TCP              10m
+hybrid-cloud-frontend   LoadBalancer   172.30.70.80    acf3bee14b0274403a6f02dc062a3784-405180745.eu-west-1.elb.amazonaws.com   8080:32156/TCP        10m
+skupper                 ClusterIP      172.30.128.55   <none>                                                                   8080/TCP,8081/TCP     7m50s
+skupper-router          ClusterIP      172.30.7.7      <none>                                                                   55671/TCP,45671/TCP   7m53s
+skupper-router-local    ClusterIP      172.30.8.239    <none>                                                                   5671/TCP              7m53s                                                               5671/TCP              34m
 ----
-
-You'll notice that there is a `skupper-controller` service which is the entry point for the Skupper UI.
-Expose this service so it is reachable from outside the cluster and you'll be able to access the Skupper UI.
 
 == Services
 
