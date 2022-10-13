@@ -45,13 +45,13 @@ export PATH=$PATH:$HOME/bin
 IMPORTANT: If you are using `minikube` as one cluster, run `minikube tunnel` in a new terminal.
 
 As Kubernetes enables you to have cloud portability, the workload can be deployed on any Kubernetes context.
-Deploy using the following three commands on all clusters and change only `WORKER_CLOUD_ID` value to differentiate between them.  I like to use the cloud region's geography.
+Deploy the backend using the following three commands on all clusters and change only `WORKER_CLOUD_ID` value to differentiate between them.  The name of the cloud or the location/geography are useful to illustrate where the work is being conducted/transacted. 
 
 [source, shell-session]
 ----
 kubectl create namespace hybrid
 kubectl -n hybrid apply -f backend.yml
-kubectl -n hybrid set env deployment/hybrid-cloud-backend WORKER_CLOUD_ID="localhost"
+kubectl -n hybrid set env deployment/hybrid-cloud-backend WORKER_CLOUD_ID="localhost" # aws, azr, gcp
 ----
 
 The annotation has already been applied in the backend.yml file but if wish to apply it manually, use the following command.
